@@ -1,0 +1,22 @@
+version: "3.9" #Version que estamos usando
+services: #Los contenedores
+  chanchito: #Nombre del contenedor
+    build: . #Lo que se va a construir
+    ports: 
+      - "3000:3000" #Puerto que va a usar
+    links: #nombre del contenedor que vamos a mapear, que utilice el contenedor de chanchito
+      - monguito
+  monguito: 
+    image: mongo #nombre de la imagen que va a usar SIN comillas
+    ports:
+      - "27017:27017" #Los puertos que va a usar
+    environment: #Variables de entorno
+      - MONGO_INITDB_ROOT_USERNAME=nico
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes: #Indicamos al contenedor monguito cuales son los volumenes que va a utilizar
+      - mongo-data:/data/db #Esta linea va sin espacios
+      # mysql -> /var/lib/mysql
+      #postgres  -> /var/lib/postgresql/data
+
+volumes: # Definir todos los volumes que van a utilizar los contenedores
+  mongo-data: #Nombre del volumen
